@@ -21,8 +21,6 @@ const accuracy = [
   { d: "W4", v: 96.0 }, { d: "W5", v: 96.7 }, { d: "W6", v: 97.4 },
 ];
 
-export default function _() { return null; }
-
 function Analytics() {
   return (
     <div className="space-y-6">

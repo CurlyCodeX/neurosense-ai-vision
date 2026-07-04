@@ -21,6 +21,7 @@ import { Route as PatientSettingsRouteImport } from './routes/patient.settings'
 import { Route as PatientReportsRouteImport } from './routes/patient.reports'
 import { Route as PatientHistoryRouteImport } from './routes/patient.history'
 import { Route as DoctorPatientsRouteImport } from './routes/doctor.patients'
+import { Route as DoctorAnalyticsRouteImport } from './routes/doctor.analytics'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -82,6 +83,11 @@ const DoctorPatientsRoute = DoctorPatientsRouteImport.update({
   path: '/patients',
   getParentRoute: () => DoctorRoute,
 } as any)
+const DoctorAnalyticsRoute = DoctorAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => DoctorRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/patient': typeof PatientRouteWithChildren
   '/register': typeof RegisterRoute
+  '/doctor/analytics': typeof DoctorAnalyticsRoute
   '/doctor/patients': typeof DoctorPatientsRoute
   '/patient/history': typeof PatientHistoryRoute
   '/patient/reports': typeof PatientReportsRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/doctor/analytics': typeof DoctorAnalyticsRoute
   '/doctor/patients': typeof DoctorPatientsRoute
   '/patient/history': typeof PatientHistoryRoute
   '/patient/reports': typeof PatientReportsRoute
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/patient': typeof PatientRouteWithChildren
   '/register': typeof RegisterRoute
+  '/doctor/analytics': typeof DoctorAnalyticsRoute
   '/doctor/patients': typeof DoctorPatientsRoute
   '/patient/history': typeof PatientHistoryRoute
   '/patient/reports': typeof PatientReportsRoute
@@ -132,6 +141,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/patient'
     | '/register'
+    | '/doctor/analytics'
     | '/doctor/patients'
     | '/patient/history'
     | '/patient/reports'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/register'
+    | '/doctor/analytics'
     | '/doctor/patients'
     | '/patient/history'
     | '/patient/reports'
@@ -158,6 +169,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/patient'
     | '/register'
+    | '/doctor/analytics'
     | '/doctor/patients'
     | '/patient/history'
     | '/patient/reports'
@@ -261,15 +273,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DoctorPatientsRouteImport
       parentRoute: typeof DoctorRoute
     }
+    '/doctor/analytics': {
+      id: '/doctor/analytics'
+      path: '/analytics'
+      fullPath: '/doctor/analytics'
+      preLoaderRoute: typeof DoctorAnalyticsRouteImport
+      parentRoute: typeof DoctorRoute
+    }
   }
 }
 
 interface DoctorRouteChildren {
+  DoctorAnalyticsRoute: typeof DoctorAnalyticsRoute
   DoctorPatientsRoute: typeof DoctorPatientsRoute
   DoctorIndexRoute: typeof DoctorIndexRoute
 }
 
 const DoctorRouteChildren: DoctorRouteChildren = {
+  DoctorAnalyticsRoute: DoctorAnalyticsRoute,
   DoctorPatientsRoute: DoctorPatientsRoute,
   DoctorIndexRoute: DoctorIndexRoute,
 }
