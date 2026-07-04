@@ -83,9 +83,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Hospital-grade AI platform for EEG-based epilepsy detection. Fast, explainable predictions for clinicians and patients." },
       { name: "author", content: "NeuroSense AI" },
       { property: "og:title", content: "NeuroSense AI — Epilepsy Detection Platform" },
-      { property: "og:description", content: "Hospital-grade AI platform for EEG-based epilepsy detection." },
+      { property: "og:description", content: "Hospital-grade AI platform for EEG-based epilepsy detection. Fast, explainable predictions for clinicians and patients." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "NeuroSense AI — Epilepsy Detection Platform" },
+      { name: "twitter:description", content: "Hospital-grade AI platform for EEG-based epilepsy detection. Fast, explainable predictions for clinicians and patients." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/793fcd52-1f8b-483b-b76d-a40b31adaca9/id-preview-833e8b17--e8f3b07c-f68b-47a6-a009-4d8da7796cb8.lovable.app-1783166172674.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/793fcd52-1f8b-483b-b76d-a40b31adaca9/id-preview-833e8b17--e8f3b07c-f68b-47a6-a009-4d8da7796cb8.lovable.app-1783166172674.png" },
     ],
     links: [
       {
