@@ -15,6 +15,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as DoctorRouteImport } from './routes/doctor'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PatientIndexRouteImport } from './routes/patient.index'
+import { Route as DoctorIndexRouteImport } from './routes/doctor.index'
 import { Route as PatientUploadRouteImport } from './routes/patient.upload'
 import { Route as PatientSettingsRouteImport } from './routes/patient.settings'
 import { Route as PatientReportsRouteImport } from './routes/patient.reports'
@@ -50,6 +51,11 @@ const PatientIndexRoute = PatientIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PatientRoute,
 } as any)
+const DoctorIndexRoute = DoctorIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DoctorRoute,
+} as any)
 const PatientUploadRoute = PatientUploadRouteImport.update({
   id: '/upload',
   path: '/upload',
@@ -73,7 +79,7 @@ const PatientHistoryRoute = PatientHistoryRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/doctor': typeof DoctorRoute
+  '/doctor': typeof DoctorRouteWithChildren
   '/login': typeof LoginRoute
   '/patient': typeof PatientRouteWithChildren
   '/register': typeof RegisterRoute
@@ -81,23 +87,24 @@ export interface FileRoutesByFullPath {
   '/patient/reports': typeof PatientReportsRoute
   '/patient/settings': typeof PatientSettingsRoute
   '/patient/upload': typeof PatientUploadRoute
+  '/doctor/': typeof DoctorIndexRoute
   '/patient/': typeof PatientIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/doctor': typeof DoctorRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/patient/history': typeof PatientHistoryRoute
   '/patient/reports': typeof PatientReportsRoute
   '/patient/settings': typeof PatientSettingsRoute
   '/patient/upload': typeof PatientUploadRoute
+  '/doctor': typeof DoctorIndexRoute
   '/patient': typeof PatientIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/doctor': typeof DoctorRoute
+  '/doctor': typeof DoctorRouteWithChildren
   '/login': typeof LoginRoute
   '/patient': typeof PatientRouteWithChildren
   '/register': typeof RegisterRoute
@@ -105,6 +112,7 @@ export interface FileRoutesById {
   '/patient/reports': typeof PatientReportsRoute
   '/patient/settings': typeof PatientSettingsRoute
   '/patient/upload': typeof PatientUploadRoute
+  '/doctor/': typeof DoctorIndexRoute
   '/patient/': typeof PatientIndexRoute
 }
 export interface FileRouteTypes {
@@ -119,17 +127,18 @@ export interface FileRouteTypes {
     | '/patient/reports'
     | '/patient/settings'
     | '/patient/upload'
+    | '/doctor/'
     | '/patient/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/doctor'
     | '/login'
     | '/register'
     | '/patient/history'
     | '/patient/reports'
     | '/patient/settings'
     | '/patient/upload'
+    | '/doctor'
     | '/patient'
   id:
     | '__root__'
@@ -142,12 +151,13 @@ export interface FileRouteTypes {
     | '/patient/reports'
     | '/patient/settings'
     | '/patient/upload'
+    | '/doctor/'
     | '/patient/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DoctorRoute: typeof DoctorRoute
+  DoctorRoute: typeof DoctorRouteWithChildren
   LoginRoute: typeof LoginRoute
   PatientRoute: typeof PatientRouteWithChildren
   RegisterRoute: typeof RegisterRoute
@@ -197,6 +207,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PatientIndexRouteImport
       parentRoute: typeof PatientRoute
     }
+    '/doctor/': {
+      id: '/doctor/'
+      path: '/'
+      fullPath: '/doctor/'
+      preLoaderRoute: typeof DoctorIndexRouteImport
+      parentRoute: typeof DoctorRoute
+    }
     '/patient/upload': {
       id: '/patient/upload'
       path: '/upload'
@@ -228,6 +245,17 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface DoctorRouteChildren {
+  DoctorIndexRoute: typeof DoctorIndexRoute
+}
+
+const DoctorRouteChildren: DoctorRouteChildren = {
+  DoctorIndexRoute: DoctorIndexRoute,
+}
+
+const DoctorRouteWithChildren =
+  DoctorRoute._addFileChildren(DoctorRouteChildren)
+
 interface PatientRouteChildren {
   PatientHistoryRoute: typeof PatientHistoryRoute
   PatientReportsRoute: typeof PatientReportsRoute
@@ -249,7 +277,7 @@ const PatientRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DoctorRoute: DoctorRoute,
+  DoctorRoute: DoctorRouteWithChildren,
   LoginRoute: LoginRoute,
   PatientRoute: PatientRouteWithChildren,
   RegisterRoute: RegisterRoute,
